@@ -6,7 +6,8 @@ import { useRef, useEffect, useState } from "react";
 import { Button } from "../common/Button";
 import { useDispatch } from "react-redux";
 import { resetQuiz } from "./quizSlice";
-
+import { CloseButton } from "../common/closeButton";
+import { cn } from "@/utils/utils";
 export default function QuizCompletion() {
   const svgRef = useRef<SVGSVGElement>(null);
   const [isActive, setIsActive] = useState(false);
@@ -26,14 +27,14 @@ export default function QuizCompletion() {
 
   return (
     <>
-      <main className="size-full flex flex-col items-center justify-around px-5 ">
+      <main className="size-full flex flex-col items-center justify-around px-5 max-w-xl mx-auto">
         <div className="flex w-full flex-col justify-between;">
           <div className="flex flex-col justify-center items-center mb-14.5 ">
-            <CongratSvg ref={svgRef} className={isActive ? "active" : ""} />
+            <CongratSvg ref={svgRef} className={cn(isActive && "active", "transform translate-x-[6%]")} />
             <h1 className="mt-10 text-[22px] text-primary-foreground font-semibold tracking-normal text-center">
               Thank you for completing!
             </h1>
-            
+            <CloseButton className="absolute top-10 right-5 lg:right-15" onClick={handleReset} />
           </div>
           <ul className="flex flex-col rounded-lg bg-primary px-0.5 w-full [&>*]:border-b-1 [&>*]:border-background [&>*:last-child]:border-none">
             <li className="flex justify-between items-center py-4.5 px-3.5 ">

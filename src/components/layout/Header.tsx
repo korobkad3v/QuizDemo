@@ -22,8 +22,6 @@ export default function Header() {
       <div className="w-full mt-6 lg:hidden">
         <QuizProgressBar/>
       </div>
-      
-      
     </header>
   )
 }
