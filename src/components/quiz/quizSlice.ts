@@ -7,8 +7,13 @@ interface Answer {
   optionLetter: string;
 }
 
+interface Question extends QuizQuestionProps {
+  answered: boolean;
+  correctAnswer: string;
+}
+
 interface QuizState {
-  questions: QuizQuestionProps[];
+  questions: Question[];
   totalQuestions: number;
   currentQuestionIndex: number;
   completedQuestions: number;
@@ -27,6 +32,8 @@ const initialState: QuizState = {
         { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 1 },
         { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 1 },
       ],
+      answered: false,
+      correctAnswer: "B"
     },
     {
       id: 2,
@@ -36,6 +43,8 @@ const initialState: QuizState = {
         { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 2 },
         { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 2 },
       ],
+      answered: false,
+      correctAnswer: "B"
     },
     {
       id: 3,
@@ -45,6 +54,8 @@ const initialState: QuizState = {
         { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 3 },
         { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 3 },
       ],
+      answered: false,
+      correctAnswer: "A"
     },
     {
       id: 4,
@@ -54,6 +65,8 @@ const initialState: QuizState = {
         { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 4 },
         { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 4 },
       ],
+      answered: false,
+      correctAnswer: "C"
     },
     {
       id: 5,
@@ -63,6 +76,8 @@ const initialState: QuizState = {
         { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 5 },
         { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 5 },
       ],
+      answered: false,
+      correctAnswer: "A"
     },
   ],
   totalQuestions: 5,
@@ -76,17 +91,33 @@ const quizSlice = createSlice({
   name: 'quiz',
   initialState,
   reducers: {
+
+
+    checkAnswer(state) {
+      const currentQuestion = state.questions[state.currentQuestionIndex];
+      const userAnswer = state.userAnswers.find(a => a.questionId === currentQuestion.id);
+
+      if (currentQuestion && userAnswer) {
+        currentQuestion.answered = true;
+      }
+    },
+
     answerQuestion(state, action: PayloadAction<{ questionId: number; optionLetter: string }>) {
       const { questionId, optionLetter } = action.payload;
-      const index = state.userAnswers.findIndex(answer => answer.questionId === questionId);
+      const question = state.questions.find(q => q.id === questionId);
 
-      if (index !== -1) {
-        state.userAnswers[index] = { questionId: questionId, optionLetter };
-      } else {
-        state.userAnswers.push({ questionId: questionId, optionLetter });
+      if (question && !question.answered) {
+        const index = state.userAnswers.findIndex(answer => answer.questionId === questionId);
+
+        if (index !== -1) {
+          state.userAnswers[index] = { questionId: questionId, optionLetter };
+        } else {
+          state.userAnswers.push({ questionId: questionId, optionLetter });
+        }
       }
     },
     completeQuestion(state) {
+      if (!state.questions[state.currentQuestionIndex].answered) return;
       if (state.currentQuestionIndex + 1 >= state.totalQuestions) {
         state.isCompleted = true;
       } else {
@@ -105,5 +136,5 @@ const quizSlice = createSlice({
   },
 });
 
-export const { completeQuestion, resetQuiz, setTotalQuestions, answerQuestion } = quizSlice.actions;
+export const { completeQuestion, checkAnswer, resetQuiz, setTotalQuestions, answerQuestion } = quizSlice.actions;
 export default quizSlice.reducer;

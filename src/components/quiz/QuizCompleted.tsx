@@ -1,0 +1,2 @@
+// QuizCompleted.tsx
+
