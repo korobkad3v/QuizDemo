@@ -33,6 +33,7 @@ export default function QuizCompletion() {
             <h1 className="mt-10 text-[22px] text-primary-foreground font-semibold tracking-normal text-center">
               Thank you for completing!
             </h1>
+            
           </div>
           <ul className="flex flex-col rounded-lg bg-primary px-0.5 w-full [&>*]:border-b-1 [&>*]:border-background [&>*:last-child]:border-none">
             <li className="flex justify-between items-center py-4.5 px-3.5 ">

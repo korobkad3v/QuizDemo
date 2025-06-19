@@ -1,10 +1,9 @@
 // Header.tsx
 import Score from "../common/Score"
-import { X } from "lucide-react";
-import { Button } from "@/components/common/Button";
 import QuizProgressBar from "@/components/quiz/QuizProgressBar";
 import { useDispatch } from "react-redux";
 import { resetQuiz } from "@/components/quiz/quizSlice";
+import { CloseButton } from "../common/closeButton";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -18,10 +17,7 @@ export default function Header() {
         <h1 className="text-lg font-semibold tracking-normal text-center">
           Fantasy Quiz #156
         </h1>
-        <Button className="rounded-full cursor-pointer p-1.5" variant="default" size="icon"
-        aria-label="Close" onClick={handleReset}>
-          <X size={24} />
-        </Button>
+        <CloseButton onClick={handleReset} />
       </div>
       <div className="w-full mt-6 lg:hidden">
         <QuizProgressBar/>
