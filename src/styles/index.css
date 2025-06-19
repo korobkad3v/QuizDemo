@@ -27,7 +27,7 @@
   --accent-foreground: rgba(244, 243, 246, 1);
 
   --muted-200: rgba(237, 232, 226, 1);
-  --muted-400: rgba(116, 116, 117, 0.5);
+  --muted-400: rgba(116, 116, 117, 1);
 
   --primary: rgba(244, 243, 246, 1);
   --primary-foreground: rgba(25, 29, 99, 1);

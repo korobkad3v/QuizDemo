@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { QuizQuestionProps } from './QuizQuestion';
 
 interface Answer {
-  questionIndex: number;
+  questionId: number;
   optionLetter: string;
 }
 
@@ -25,7 +25,7 @@ const initialState: QuizState = {
         { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 1 },
         { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 1 },
         { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 1 },
-      ]
+      ],
     },
     {
       id: 2,
@@ -34,7 +34,7 @@ const initialState: QuizState = {
         { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 2 },
         { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 2 },
         { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 2 },
-      ]
+      ],
     },
     {
       id: 3,
@@ -43,11 +43,29 @@ const initialState: QuizState = {
         { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 3 },
         { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 3 },
         { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 3 },
-      ]
+      ],
+    },
+    {
+      id: 4,
+      question: "PREDICT THE TOP LOSER (for tomorrow) across these indices",
+      options: [
+        { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 1 },
+        { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 1 },
+        { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 1 },
+      ],
+    },
+    {
+      id: 5,
+      question: "PREDICT THE TOP LOSER (for tomorrow) across these indices",
+      options: [
+        { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 1 },
+        { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 1 },
+        { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 1 },
+      ],
     },
   ],
   totalQuestions: 5,
-  completedQuestions: 3,
+  completedQuestions: 0,
   currentQuestionId: 0,
   userAnswers: [],
 };
@@ -56,15 +74,14 @@ const quizSlice = createSlice({
   name: 'quiz',
   initialState,
   reducers: {
-    answerQuestion(state, action: PayloadAction<{ questionId: number, optionLetter: string }>) {
-      const existingAnswer = state.userAnswers.find(answer => answer.questionIndex === action.payload.questionId);
-      if (existingAnswer) {
-        existingAnswer.optionLetter = action.payload.optionLetter;
+    answerQuestion(state, action: PayloadAction<{ questionId: number; optionLetter: string }>) {
+      const { questionId, optionLetter } = action.payload;
+      const index = state.userAnswers.findIndex(answer => answer.questionId === questionId);
+
+      if (index !== -1) {
+        state.userAnswers[index] = { questionId: questionId, optionLetter };
       } else {
-        state.userAnswers.push({
-          questionIndex: action.payload.questionId,
-          optionLetter: action.payload.optionLetter,
-        });
+        state.userAnswers.push({ questionId: questionId, optionLetter });
       }
     },
     completeQuestion(state) {
@@ -81,6 +98,7 @@ const quizSlice = createSlice({
     setTotalQuestions(state, action: PayloadAction<number>) {
       state.totalQuestions = action.payload;
     },
+
   },
 });
 

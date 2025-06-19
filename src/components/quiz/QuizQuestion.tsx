@@ -6,12 +6,11 @@ export interface QuizQuestionProps {
   id: number;
   question: string;
   options: QuizOptionProps[];
-  callback?: () => void
 }
 
 export default function QuizQuestion(
   { question = "Qs",
-    options 
+    options,
   }: QuizQuestionProps
 ) {
   return (
