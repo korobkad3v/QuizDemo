@@ -6,6 +6,7 @@ import { Button } from "@/components/common/Button";
 import { useState } from "react";
 import Header from "../layout/Header";
 import QuizCompletion from "./QuizCompletion";
+import QuizProgressBar from "./QuizProgressBar";
 
 export default function Quiz() {
   const dispatch = useDispatch();
@@ -44,27 +45,30 @@ export default function Quiz() {
     }
   };
 
-  if (isCompleted) return <QuizCompletion/>;
+  if (isCompleted) return <QuizCompletion />;
 
   return (
     <>
-    <Header />
-    <main className="flex-grow container mx-auto w-full">
-      <div className="size-full px-5 pb-14.5 flex flex-col justify-between">
-        <QuizQuestion
-          key={currentQuestion.id}
-          id={currentQuestion.id}
-          question={currentQuestion.question}
-          options={currentQuestion.options}
-          answered={isAnswered}
-          isCorrect={isCorrect}
-        />
-        <div className="flex">
+      <Header />
+      <main className="flex flex-col flex-grow size-full lg:mt-12.5">
+        <div className="size-full px-5  flex flex-col justify-between max-w-[510px] mx-auto">
+          <QuizQuestion
+            key={currentQuestion.id}
+            id={currentQuestion.id}
+            question={currentQuestion.question}
+            options={currentQuestion.options}
+            answered={isAnswered}
+            isCorrect={isCorrect}
+          />
+        </div>
+        <div className="flex px-5 pb-14.5 items-center justify-center gap-x-52.5 flex-grow w-full lg:bg-primary lg:p-0 lg:py-5">
+          <QuizProgressBar className="hidden lg:flex lg:max-w-[240px]" lineClassName="bg-background"/>
           <Button
             onClick={handleContinue}
             disabled={!isOptionSelected}
             variant={"accent"}
-            className="w-full uppercase text-base text-semibold text-muted-200 transition-colors duration-400 ease-in-out">
+            className="w-full uppercase text-base text-semibold text-muted-200 transition-colors duration-400 ease-in-out
+            lg:max-w-[240px]">
             {isAnswered && currentQuestionIndex + 1 === totalQuestions
               ? "Finish"
               : isAnswered
@@ -74,8 +78,7 @@ export default function Quiz() {
               : "Select an option"}
           </Button>
         </div>
-      </div>
-    </main>
+      </main>
     </>
   );
 }
