@@ -1,6 +1,5 @@
 @import url("./typography.css");
 @import "tailwindcss";
-@import "tailwindcss/preflight";
 
 
 @theme inline {
@@ -16,10 +15,8 @@
   --font-sans: "GeneralSans-Variable";
 }
 
-
-
 :root {
-  --background: rgba(116, 116, 117, 1);
+  --background: rgba(237, 232, 227, 1);
   --foreground: rgba(0, 0, 0, 1);
 
   --accent-600: rgba(69, 196, 134, 1);
@@ -33,4 +30,8 @@
   --primary-foreground: rgba(25, 29, 99, 1);
 }
 
-
+@layer base {
+  body {
+    @apply bg-background text-foreground size-full;
+  }
+}
