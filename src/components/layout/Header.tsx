@@ -1,5 +1,7 @@
 // Header.tsx
 import Score from "../common/Score"
+import { X } from "lucide-react";
+import { Button } from "@/components/common/Button";
 
 export default function Header() {
   return (
@@ -9,7 +11,12 @@ export default function Header() {
         <h1 className="text-lg font-semibold tracking-normal text-center">
           Fantasy Quiz #156
         </h1>
+        <Button className="rounded-full cursor-pointer p-1.5" variant="default" size="icon"
+        aria-label="Close">
+          <X size={24} />
+        </Button>
       </div>
+      
     </header>
   )
 }
