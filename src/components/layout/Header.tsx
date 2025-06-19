@@ -3,8 +3,15 @@ import Score from "../common/Score"
 import { X } from "lucide-react";
 import { Button } from "@/components/common/Button";
 import QuizProgressBar from "@/components/quiz/QuizProgressBar";
+import { useDispatch } from "react-redux";
+import { resetQuiz } from "@/components/quiz/quizSlice";
 
 export default function Header() {
+  const dispatch = useDispatch();
+  const handleReset = () => {
+    console.log("reset");
+    dispatch(resetQuiz());
+  };
   return (
     <header className="flex flex-col items-center justify-between py-10 px-5">
       <div className="flex items-center justify-between w-full">
@@ -13,7 +20,7 @@ export default function Header() {
           Fantasy Quiz #156
         </h1>
         <Button className="rounded-full cursor-pointer p-1.5" variant="default" size="icon"
-        aria-label="Close">
+        aria-label="Close" onClick={handleReset}>
           <X size={24} />
         </Button>
       </div>

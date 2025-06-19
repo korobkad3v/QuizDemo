@@ -7,27 +7,25 @@ import type { RootState } from "@/store";
 import { Button } from "@/components/common/Button";
 
 export default function Quiz() {
-  const { questions, currentQuestionId } = useSelector(
+  const { questions, currentQuestionIndex } = useSelector(
     (state: RootState) => state.quiz
   );
-  const currentQuestion = questions[currentQuestionId];
+
+  const currentQuestion = questions[currentQuestionIndex];
   const dispatch = useDispatch();
+  const userAnswers = useSelector((state: RootState) => state.quiz.userAnswers);
 
-  const isAnswered = useSelector((state: RootState) => {
-    const { questions, currentQuestionId, userAnswers } = state.quiz;
-    const currentQuestion = questions[currentQuestionId];
-    return userAnswers.some(
-      (answer) => answer.questionId === currentQuestion.id
-    );
-  });
+  const isAnswered = userAnswers.some(
+    (answer) => answer.questionId === currentQuestion.id
+  );
+  const isCompleted = useSelector((state: RootState) => state.quiz.isCompleted);
 
- 
   const handleContinue = () => {
+    console.log("user answers", userAnswers);
     dispatch(completeQuestion());
   };
 
-  if (!currentQuestion) return <div>Quiz finished!</div>;
-
+  if (isCompleted) return <div>Quiz finished!</div>;
   return (
     <div
       className="size-full px-5 pb-14.5 flex flex-col 

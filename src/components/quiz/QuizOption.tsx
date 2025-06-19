@@ -27,6 +27,7 @@ export default function QuizOption({ questionId,optionLetter, stock }: QuizOptio
   )?.optionLetter === optionLetter
 );
   const handleAnswer = () => {
+  
     dispatch(answerQuestion({ questionId, optionLetter }));
   };
   return (

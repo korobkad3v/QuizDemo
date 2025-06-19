@@ -10,9 +10,10 @@ interface Answer {
 interface QuizState {
   questions: QuizQuestionProps[];
   totalQuestions: number;
-  currentQuestionId: number;
+  currentQuestionIndex: number;
   completedQuestions: number;
   userAnswers: Answer[];
+  isCompleted: boolean;
 }
 
 
@@ -49,25 +50,26 @@ const initialState: QuizState = {
       id: 4,
       question: "PREDICT THE TOP LOSER (for tomorrow) across these indices",
       options: [
-        { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 1 },
-        { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 1 },
-        { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 1 },
+        { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 4 },
+        { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 4 },
+        { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 4 },
       ],
     },
     {
       id: 5,
       question: "PREDICT THE TOP LOSER (for tomorrow) across these indices",
       options: [
-        { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 1 },
-        { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 1 },
-        { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 1 },
+        { optionLetter: "A", stock: { stockIndex: "NIFTY50", price: "₹ 17,356,", priceChange: -0.31 }, questionId: 5 },
+        { optionLetter: "B", stock: { stockIndex: "NIFTYNEXT50", price: "₹56,226,", priceChange: -0.31 }, questionId: 5 },
+        { optionLetter: "C", stock: { stockIndex: "NIFTYBANK", price: "₹ 17,356,", priceChange: 2.12 }, questionId: 5 },
       ],
     },
   ],
   totalQuestions: 5,
   completedQuestions: 0,
-  currentQuestionId: 0,
+  currentQuestionIndex: 0,
   userAnswers: [],
+  isCompleted: false
 };
 
 const quizSlice = createSlice({
@@ -85,15 +87,16 @@ const quizSlice = createSlice({
       }
     },
     completeQuestion(state) {
-      if (state.completedQuestions < state.totalQuestions) {
+      if (state.currentQuestionIndex + 1 >= state.totalQuestions) {
+        state.isCompleted = true;
+      } else {
+        state.currentQuestionIndex += 1;
         state.completedQuestions += 1;
-        state.currentQuestionId += 1;
       }
-    },
-    resetQuiz(state) {
-      state = {
-        ...initialState,
-      };
+    }
+    ,
+    resetQuiz() {
+      return initialState;
     },
     setTotalQuestions(state, action: PayloadAction<number>) {
       state.totalQuestions = action.payload;
