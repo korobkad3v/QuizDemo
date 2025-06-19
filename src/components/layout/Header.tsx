@@ -2,6 +2,7 @@
 import Score from "../common/Score"
 import { X } from "lucide-react";
 import { Button } from "@/components/common/Button";
+import QuizProgressBar from "@/components/quiz/QuizProgressBar";
 
 export default function Header() {
   return (
@@ -16,6 +17,10 @@ export default function Header() {
           <X size={24} />
         </Button>
       </div>
+      <div className="w-full mt-6">
+        <QuizProgressBar/>
+      </div>
+      
       
     </header>
   )
