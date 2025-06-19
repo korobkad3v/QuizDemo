@@ -6,7 +6,7 @@ import QuizProgressBar from "@/components/quiz/QuizProgressBar";
 
 export default function Header() {
   return (
-    <header className="flex flex-col items-center justify-between pt-10 px-5">
+    <header className="flex flex-col items-center justify-between py-10 px-5">
       <div className="flex items-center justify-between w-full">
         <Score />
         <h1 className="text-lg font-semibold tracking-normal text-center">
