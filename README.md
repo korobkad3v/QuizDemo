@@ -35,3 +35,8 @@ npm run dev
 # или для сборки
 npm run build
 ```
+
+```shell
+http://localhost:3000
+
+```
