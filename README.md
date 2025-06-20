@@ -38,5 +38,7 @@ npm run build
 
 ```shell
 http://localhost:3000
-
 ```
+
+# Или перейти на демку
+https://starlit-flan-ca8b1f.netlify.app/
