@@ -121,7 +121,8 @@ export default function QuizForm() {
             onChange={(phone) => setForm({ ...form, phone })}
             containerClass="!text-base"
             placeholder="Enter your phone number bg-primary"
-            inputStyle={{ backgroundColor: "rgba(244, 243, 246, 1)" }}
+            inputStyle={{ backgroundColor: "rgba(244, 243, 246, 1)", border: "none" } }
+            buttonStyle={{ backgroundColor: "rgba(244, 243, 246, 1)", border: "none" } }
             inputClass="flex h-9 w-full rounded-lg  px-3 py-2 text-sm text-foreground shadow-sm shadow-black/5 transition-shadow placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50"
           />
           {errors.phone && <p className="text-red">{errors.phone}</p>}

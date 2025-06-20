@@ -5,7 +5,6 @@ import type { RootState } from "@/store";
 import { Button } from "@/components/common/Button";
 import { useState } from "react";
 import Header from "../layout/Header";
-import QuizCompletion from "./QuizCompletion";
 import QuizForm from "./QuizForm";
 import QuizProgressBar from "./QuizProgressBar";
 
